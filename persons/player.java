@@ -36,6 +36,6 @@ public class player {
     }
 
     public int upVida(int vida){
-        return this.vida -= vida;
+        return this.vida += vida;
     }
 }

@@ -10,19 +10,18 @@ public class Program {
         char a;
         int i = 1;
         boolean janela = true;
+        char opcao;
 
         while (janela == true) {
             if (i != 1) {
                 clear();
-                System.out.println("O seu nível é " + pl.getLvl());
-                System.out.println("A sua vida é " + pl.getVida());
-                System.out.println();
+                System.out.println("Nível: " + (int) (pl.getLvl()));
+                System.out.println("Vida: " + pl.getVida());
             } else if (i == 1) {
-
+                System.out.println("Seja Bem-vindo ao rpg de texto!");
             }
-
             i++;
-
+            System.out.println();
             System.out.println("---Menu---");
             System.out.println("0 - Para sair");
             System.out.println("1 - Para sortear");
@@ -32,18 +31,21 @@ public class Program {
 
             if (jogo == 0) {
                 System.out.print("Você tem certeza (s/n)? ");
-                char m = sc.next().charAt(0);
+                opcao = sc.next().charAt(0);
 
-                if (m == 's' || m == 'S') {
+                if (opcao == 's' || opcao == 'y' || opcao == 'S' || opcao == 'Y') {
                     janela = false;
-                } else if (m == 'n' || m == 'N') {
+                    break;
+                } else if (opcao == 'n' || opcao == 'N') {
                     System.out.println("Obrigado!");
                     System.out.print("Digite S para continuar...");
                     a = sc.next().charAt(0);
+                    continue;
                 } else {
                     System.out.println("Erro, reinicei o jogo :C");
                     System.out.println("Digite S para continuar...");
                     a = sc.next().charAt(0);
+                    break;
                 }
 
             } else if (jogo == 1) {
@@ -53,24 +55,27 @@ public class Program {
                         guest gt = new guest(pl.getLvl());
                         System.out.println("Apareceu um Viajante!");
                         System.out.println("Quer saber mais sobre ele (s/n)? ");
-                        char op = sc.next().charAt(0);
+                        opcao = sc.next().charAt(0);
 
-                        if (op == 's' || op  == 'y'){
-                            System.out.println(gt);
+                        if (opcao == 's' || opcao == 'y' || opcao == 'S' || opcao == 'Y'){
+                            System.out.println();
+                            System.out.println("O Viajante é um misterioso personagem que percorre diferentes lugares em busca de novas aventuras e experiências.");
+                            System.out.println();
+                            System.out.println("Ele é conhecido por oferecer uma troca curiosa: se você der uma moeda a ele, o Viajante irá lhe dar algo em troca.");
+                            System.out.println("Essa troca pode ser algo útil e vantajoso para você, ou pode ser algo aparentemente inútil ou até mesmo algo que lhe atrapalhe!");
+                            System.out.println();
+                            System.out.println("De qualquer forma, o Viajante é uma figura intrigante que desperta a curiosidade e o interesse das pessoas ao seu redor.");
                         } 
 
                         System.out.println();
                         System.out.println("O você aceita dar uma moeda para ele (s/n)? ");
-                        char opcao = sc.next().charAt(0);
+                        opcao = sc.next().charAt(0);
 
                         if (opcao == 's' || opcao == 'y' || opcao == 'S' || opcao == 'Y') {
-                            int rdm = (int) ((Math.random() * 1) + 1);
+                            int rdm = (int) ((Math.random() * 4) + 1);
                             gt.evento(rdm, pl);
 
-                            int nivel = (int) (pl.getLvl());
-                            System.out.println("Você ganhou XP, o seu nível agora está no " + nivel);
-
-                        } else if (opcao == 'n') {
+                        } else if (opcao == 'n' || opcao == 'N') {
                             System.out.println("Que pena meu jovem!");
                         }
 
