@@ -1,4 +1,4 @@
-package persons;
+package characters;
 
 import java.util.Scanner;
 
@@ -101,45 +101,51 @@ public class player {
             return p[poção];
         } else {
             String p[] = { "Poções Pequenas de Cura", "Poções Médias de Cura", "Poções Grandes de Cura",
-            "Poções Pequenas de Ataque", "Poções Médias de Ataque", "Poções Grandes de Ataque",
-            "Poções Pequenas de Defesa", "Poções Médias de Defesa", "Poções Grandes de Defesa",
-            "Poções Pequenas de Nível" };
+                    "Poções Pequenas de Ataque", "Poções Médias de Ataque", "Poções Grandes de Ataque",
+                    "Poções Pequenas de Defesa", "Poções Médias de Defesa", "Poções Grandes de Defesa",
+                    "Poções Pequenas de Nível" };
             return p[poção];
         }
     }
 
-    public String getDescPoção(int poção, boolean compl) {
+    public String getDescPoção(int poção, int i) {
         String p[] = { "2 de vida", "5 de vida", "10 de vida", "2 de ataque", "4 de ataque", "7 de ataque",
                 "2 de defesa", "4 de defesa", "7 de defesa", "2 de nível" };
-        String b[] = { "ganha ", "ganhou " };
-        if (compl == true) {
+        String b[] = { "ganha ", "ganhou ", "perde ", "perdeu " };
+        if (i == 0) {
             return b[0] + p[poção];
-        } else {
+        } else if (i == 1) {
             return b[1] + p[poção];
+        } else if (i == 2) {
+            return b[2] + p[poção];
+        } else {
+            return b[3] + p[poção];
         }
     }
 
-    public void usePoções(int poção) {       
-        if (poção == 0)
-            upVida(2);
-        else if (poção == 1)
-            upVida(5);
-        else if (poção == 2)
-            upVida(10);
-        else if (poção == 3)
-            upAtaque(2);
-        else if (poção == 4)
-            upAtaque(4);
-        else if (poção == 5)
-            upAtaque(7);
-        else if (poção == 6)
-            upDefesa(2);
-        else if (poção == 7)
-            upDefesa(4);
-        else if (poção == 8)
-            upDefesa(7);
-        else if (poção == 9) 
-            upLvl(2);
+    public void usePoções(int poção, int quantidade) {
+        for (int i = 1; i <= quantidade; i++) {
+            if (poção == 0)
+                upVida(2);
+            else if (poção == 1)
+                upVida(5);
+            else if (poção == 2)
+                upVida(10);
+            else if (poção == 3)
+                upAtaque(2);
+            else if (poção == 4)
+                upAtaque(4);
+            else if (poção == 5)
+                upAtaque(7);
+            else if (poção == 6)
+                upDefesa(2);
+            else if (poção == 7)
+                upDefesa(4);
+            else if (poção == 8)
+                upDefesa(7);
+            else if (poção == 9)
+                upLvl(2);
+        }
     }
 
     public void addPoções(int poção, int quantidade) {
@@ -163,13 +169,18 @@ public class player {
     public void toUsePoções(int poção) {
         Scanner sc = new Scanner(System.in);
         char opcao;
+        int bom = 9;
 
         System.out.print("Deseja saber mais sobre a " + getNomePoção(poção, true) + " antes de a usar (s/n)?");
         opcao = sc.next().charAt(0);
 
         System.out.println();
         if (opcao == 's' || opcao == 'y' || opcao == 'S' || opcao == 'Y') {
-            System.out.println("Com a " + getNomePoção(poção, true) + ", você " + getDescPoção(poção, true) + " !");
+            if (opcao > bom) {
+                System.out.println("Com a " + getNomePoção(poção, true) + ", você " + getDescPoção(poção, 0) + " !");
+            } else {
+                System.out.println("Com a " + getNomePoção(poção, true) + ", você " + getDescPoção(poção, 2) + " !");
+            }
             System.out.println();
         }
 
@@ -178,12 +189,35 @@ public class player {
 
         System.out.println();
         if (opcao == 's' || opcao == 'y' || opcao == 'S' || opcao == 'Y') {
-            System.out
-                    .println("Você usou " + getNomePoção(poção, true) + "!" + " Você " + getDescPoção(poção, false) + "!!!");
-            System.out.println();
-            removePoções(poção, 1);
-            usePoções(poção);
+            if (getPoção(poção) > 1) {
+                System.out.print("Quantas poções quer usar? ");
+                int n = sc.nextInt();
+                if (poção > bom) {
+                    System.out.println("Você usou "+ n + " , " + getNomePoção(poção, true) + "!" + " Você "
+                            + getDescPoção(poção, 3) + "!!!");
+                    System.out.println();
+                    removePoções(poção, n);
+                    usePoções(poção,n);
+                } else {
+                    System.out.println("Você usou 1, " + getNomePoção(poção, true) + "!" + " Você "
+                            + getDescPoção(poção, 1) + "!!!");
+                    System.out.println();
+                    removePoções(poção, 1);
+                    usePoções(poção,1);
+                }
+            } else {
+                if (poção > bom) {
+                    System.out.println("Você usou 1, " + getNomePoção(poção, true) + "!" + " Você "
+                            + getDescPoção(poção, 3) + "!!!");
+                } else {
+                    System.out.println("Você usou 1, " + getNomePoção(poção, true) + "!" + " Você "
+                            + getDescPoção(poção, 1) + "!!!");
+                }
+                System.out.println();
+                removePoções(poção, 1);
+                usePoções(poção,1);
+            }
+
         }
-        sc.close();
     }
 }

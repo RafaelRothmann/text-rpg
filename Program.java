@@ -16,7 +16,5 @@ public class Program {
 
         game jogo = new game(level);
         jogo.gameMode();
-
-        sc.close();
     }
 }
