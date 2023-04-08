@@ -1,8 +1,9 @@
+package src;
 import java.io.IOException;
 import java.util.Scanner;
 
-import system.game;
-import system.screen;
+import src.system.game;
+import src.system.screen;
 
 public class Program {
     public static void main(String args[]) throws InterruptedException, IOException {

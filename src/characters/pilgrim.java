@@ -1,9 +1,9 @@
-package characters;
+package src.characters;
 
 import java.io.IOException;
 import java.util.Scanner;
 
-import system.screen;
+import src.system.screen;
 
 public class pilgrim {
     private String nome;
@@ -18,7 +18,7 @@ public class pilgrim {
         this.defesa = (int) (1.5 * (0.5 * level));
     }
 
-    public String getNome(){
+    public String getNome() {
         return this.nome;
     }
 
@@ -39,22 +39,23 @@ public class pilgrim {
     }
 
     public void luta(player pl) throws InterruptedException, IOException {
-        boolean lutar = true;
-        int i = 0;
+        boolean lutar = true, i = false;
         char opcao;
         Scanner sc = new Scanner(System.in);
+        int b = 0;
 
         while (lutar == true || pl.getVida() > 0) {
-            if (getVida() < 0){
-                System.out.println("Você matou o " + getNome()+ "!");
-                int lvl = (int) ((0.5 * getVida())/pl.getLvl());
+            if (getVida() < 0) {
+                System.out.println("Você matou o " + getNome() + "!");
+                int lvl = (int) ((0.5 * b) / pl.getLvl());
                 System.out.println("Você ganhou " + lvl + " de nível");
                 pl.upLvl(lvl);
                 break;
             }
-            int k = 0;
+            boolean k = false;
+            b++;
             screen.clear();
-            if (i == 0) {
+            if (i == false) {
                 System.out.println("O Peregrino te deu um tapa");
                 System.out.println();
                 pl.downVida(1);
@@ -62,8 +63,8 @@ public class pilgrim {
                 System.out.println();
                 System.out.print("Digite S para continuar... ");
                 opcao = sc.next().charAt(0);
+                i = true;
             }
-            i = 1;
             screen.clear();
             System.out.println("Olá, " + pl.getNome() + ", veja seus atributos: ");
             System.out.println();
@@ -76,7 +77,7 @@ public class pilgrim {
             for (int j = 0; j < pl.getArryPoções().length; j++) {
                 if (pl.getPoção(j) == null || pl.getPoção(j) <= 0) {
                 } else {
-                    k = 1;
+                    k = true;
                     if (pl.getPoção(j) > 1) {
                         System.out.println(pl.getNomePoção(j, false) + ": " + pl.getPoção(j));
                     } else {
@@ -86,33 +87,29 @@ public class pilgrim {
             }
 
             System.out.println();
-            System.out.println("---Menu---");
+            System.out.println("--- Menu da Luta contra o " + getNome() + " ---");
             System.out.println("0 - Para fugir da luta");
             System.out.println("1 - Para atacar");
             System.out.println("2 - Para procurar um item no chão");
-            if (k == 1) {
+            if (k == true) {
                 System.out.println("3 - Para usar uma poção");
             }
             System.out.print("Digite a sua opção: ");
             int jogo = sc.nextInt();
-            
+
             screen.clear();
 
-            if (jogo == 3 && k == 0){
+            if (jogo == 3 && k == false) {
                 continue;
             }
 
-            if (jogo == 0){
+            if (jogo == 0) {
                 System.out.print("Você tem certeza de que deseja fugir (s/n)? ");
                 opcao = sc.next().charAt(0);
                 if (opcao == 's' || opcao == 'y' || opcao == 'S' || opcao == 'Y') {
                     lutar = false;
                     break;
                 } else if (opcao == 'n' || opcao == 'N') {
-                    System.out.println("Obrigado!");
-                    System.out.println();
-                    System.out.print("Digite S para continuar... ");
-                    opcao = sc.next().charAt(0);
                     continue;
                 } else {
                     System.out.println("Erro, reinicei o jogo :C");
@@ -121,26 +118,27 @@ public class pilgrim {
                     opcao = sc.next().charAt(0);
                     continue;
                 }
-            } if (jogo == 1){
+            }
+            if (jogo == 1) {
                 int vida = pl.getAtaque() - getDefesa();
 
-                if(vida <= 0){
+                if (vida <= 0) {
                     System.out.println("O " + getNome() + " esquivou do ataque!!");
                     vida = 0;
-                } else{
+                } else {
                     System.out.println("Você deu um dano de " + vida + " no " + getNome());
                 }
                 System.out.println();
                 downVida(vida);
-                if (getVida() <= 0){
-                    System.out.println("Você matou o " + getNome()+ "!");
-                    int lvl = (int) ((getVida())/pl.getLvl());
-                    if (lvl <= 0){
+                if (getVida() <= 0) {
+                    System.out.println("Você matou o " + getNome() + "!");
+                    int lvl = (int) ((getVida()) / pl.getLvl());
+                    if (lvl <= 0) {
                         System.out.println();
                         System.out.print("Digite S para continuar... ");
                         opcao = sc.next().charAt(0);
                         break;
-                    } else{
+                    } else {
                         System.out.println();
                         System.out.println("Você ganhou " + lvl + " de nível");
                         pl.upLvl(lvl);
@@ -151,7 +149,7 @@ public class pilgrim {
                     }
                 }
                 System.out.println();
-                System.out.println("Vida do " + getNome() +" agora: " + getVida());
+                System.out.println("Vida do " + getNome() + " agora: " + getVida());
                 System.out.println();
                 System.out.print("Digite S para continuar... ");
                 opcao = sc.next().charAt(0);
@@ -159,14 +157,14 @@ public class pilgrim {
                 screen.clear();
                 vida = getAtaque() - pl.getDefesa();
 
-                if (vida <= 0){
+                if (vida <= 0) {
                     System.out.println("Você esquivou do ataque do " + getNome());
                     vida = 0;
-                } else{
+                } else {
                     System.out.println("O " + getNome() + " te deu um dano de " + vida);
                 }
                 pl.downVida(vida);
-                if (pl.getVida() <= 0){
+                if (pl.getVida() <= 0) {
                     break;
                 }
                 System.out.println();
@@ -176,18 +174,19 @@ public class pilgrim {
                 opcao = sc.next().charAt(0);
 
                 continue;
-            } if (jogo == 2){
+            }
+            if (jogo == 2) {
                 vida = getAtaque() - pl.getDefesa();
 
-                if (vida <= 0){
+                if (vida <= 0) {
                     System.out.println("Você esquivou do ataque do " + getNome());
                     vida = 0;
-                } else{
+                } else {
                     System.out.println("O " + getNome() + " te deu um dano de " + vida);
                 }
                 System.out.println();
                 pl.downVida(vida);
-                if (pl.getVida() <= 0){
+                if (pl.getVida() <= 0) {
                     break;
                 }
 
@@ -199,7 +198,7 @@ public class pilgrim {
                 screen.clear();
 
                 int rdm = (int) ((Math.random() * 3) + 1);
-                if (rdm == 1){
+                if (rdm == 1) {
                     int qd = (int) ((Math.random() * 4) + 1);
                     System.out.println("Você achou " + qd + " moedas no chão!");
                     System.out.println();
@@ -210,20 +209,20 @@ public class pilgrim {
                     if (opcao == 's' || opcao == 'y' || opcao == 'S' || opcao == 'Y') {
                         System.out.println("Você pegou " + qd + " moedas no chão!");
                         pl.upMoeda(qd);
-                    } 
-                } else if (rdm == 2){
+                    }
+                } else if (rdm == 2) {
                     System.out.println("Você não achou nada!");
-                } else{
+                } else {
                     int qd = (int) ((Math.random() * 4) + 1);
                     int position = (int) ((Math.random() * 10) + 1);
                     int bom = 9;
                     boolean compl;
                     String pre;
 
-                    if (qd > 1){
+                    if (qd > 1) {
                         compl = false;
                         pre = "as";
-                    } else{
+                    } else {
                         compl = true;
                         pre = "a";
                     }
@@ -236,17 +235,19 @@ public class pilgrim {
                     if (opcao == 's' || opcao == 'y' || opcao == 'S' || opcao == 'Y') {
                         if (opcao > bom) {
                             System.out.println();
-                            System.out.println("Com a " + pl.getNomePoção(position, compl) + ", você " + pl.getDescPoção(position, 0) + "!");
+                            System.out.println("Com a " + pl.getNomePoção(position, compl) + ", você "
+                                    + pl.getDescPoção(position, 0) + "!");
                         } else {
                             System.out.println();
-                            System.out.println("Com a " + pl.getNomePoção(position, compl) + ", você " + pl.getDescPoção(position, 2) + "!");
+                            System.out.println("Com a " + pl.getNomePoção(position, compl) + ", você "
+                                    + pl.getDescPoção(position, 2) + "!");
                         }
                     }
 
                     System.out.println();
                     System.out.println("Deseja pegar " + pre + " " + pl.getNomePoção(position, compl) + "?");
                     opcao = sc.next().charAt(0);
-                    if (opcao == 's' || opcao == 'y' || opcao == 'S' || opcao == 'Y'){
+                    if (opcao == 's' || opcao == 'y' || opcao == 'S' || opcao == 'Y') {
                         System.out.println("Você pegou " + pre + " " + pl.getNomePoção(position, compl));
                         pl.addPoções(position, qd);
                     }
@@ -255,7 +256,7 @@ public class pilgrim {
                 System.out.print("Digite S para continuar... ");
                 opcao = sc.next().charAt(0);
                 continue;
-            } else if (jogo == 3){
+            } else if (jogo == 3) {
                 screen.clear();
 
                 System.out.println("Qual poção deseja usar: ");
@@ -301,19 +302,26 @@ public class pilgrim {
         Scanner sc = new Scanner(System.in);
         char op;
         screen.clear();
-        String poção = "O Peregrino te ofecereceu um gole de uma poção desconhecida, deseja tomar (s/n)?";
+        String poção = "O Peregrino te ofecereceu um gole de uma poção desconhecida, deseja tomar (s/n)? ";
         int bom = 9;
         switch (random) {
             case 1:
                 int rdm = (int) ((Math.random() * (5 - (pl.getLvl())) + 1));
                 System.out.println("O Peregrino te deu uma bolsa, com " + rdm + " de nível!");
-                pl.upLvl(rdm);
+                System.out.println();
+                System.out.print("Você aceita essa bolsa (s/n)?");
+                op = sc.next().charAt(0);
+                System.out.println();
+                if (op == 's' || op == 'y' || op == 'S' || op == 'Y') {
+                    System.out.println("Você ganhou " + rdm + " de nível!");
+                    pl.upLvl(rdm);
+                }
                 break;
             case 2:
                 int position = (int) ((Math.random() * 10) + 1);
                 position -= 1;
                 rdm = (int) ((Math.random() * ((5) / pl.getLvl()) + 1));
-                System.out.println(poção);
+                System.out.print(poção);
                 op = sc.next().charAt(0);
 
                 System.out.println();
@@ -342,7 +350,7 @@ public class pilgrim {
                 break;
             case 4:
                 rdm = (int) ((Math.random() * ((5 + pl.getLvl()) - (pl.getMoeda())) + 1));
-                System.out.println("O Peregrino está pedindo mais 10 moedas, deseja dar (s/n)?");
+                System.out.println("O Peregrino está pedindo 10 moedas, deseja dar (s/n)?");
                 char op2 = sc.next().charAt(0);
 
                 System.out.println();

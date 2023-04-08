@@ -1,0 +1,5 @@
+Este é um RPG de texto desenvolvido em Java que pode ser jogado através do console do computador. O jogo inclui um sistema de luta, poções, moedas, vida, level e criaturas perigosas para enfrentar, coletar moedas, adquirir novas habilidades e itens poderosos, além de aumentar seus atributos.
+
+O sistema de poções permite ao jogador adicionar e diminuir os seus pontos de vida, defesa e ataque durantes as batalhas e fora delas, enquanto as moedas coletadas podem ser usadas para comprar novos equipamentos e itens. As criaturas variam desde monstros comuns até chefes perigosos.
+
+O jogo também possui um sistema de level que permite ao jogador progredir e aumentar seus atributos, e enfrentar novos desafios. Este RPG de texto é adequado para jogadores novatos e experientes em RPGs, e oferece uma experiência imersiva e recompensadora no mundo da fantasia.

@@ -1,4 +1,4 @@
-package characters;
+package src.characters;
 
 import java.util.Scanner;
 

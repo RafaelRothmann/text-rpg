@@ -1,10 +1,11 @@
-package system;
+package src.system;
 
 import java.io.IOException;
 import java.util.Scanner;
 
-import characters.pilgrim;
-import characters.player;
+import src.characters.pilgrim;
+import src.characters.player;
+import src.characters.goblin;
 
 public class game {
     private int Level;
@@ -13,7 +14,7 @@ public class game {
         this.Level = lvl;
     }
 
-    public void gameMode() throws InterruptedException, IOException{
+    public void gameMode() throws InterruptedException, IOException {
         screen.clear();
 
         Scanner sc = new Scanner(System.in);
@@ -23,17 +24,35 @@ public class game {
         char opcao;
         String op = null;
 
+        pl.upMoeda(10000);
         while (janela == true) {
-            int k = 0;
-            if (op != null) {
-                if (pl.getVida() <= 0) {
-                    screen.clear();
-                    System.out.println("Você morreu");
-                    System.out.print("Digite S para continuar... ");
-                    op = sc.nextLine();
-                    break;
+            boolean k = false;
+            if (pl.getVida() <= 0) {
+                screen.clear();
+                System.out.println("Você morreu!!!");
+                System.out.println("veja suas estatisticas finais:");
+                System.out.println();
+                System.out.println("Nível: " + (int) (pl.getLvl()));
+                System.out.println("Ataque: " + pl.getAtaque());
+                System.out.println("Defesa: " + pl.getDefesa());
+                System.out.println("Moedas: " + pl.getMoeda());
+                for (int j = 0; j < pl.getArryPoções().length; j++) {
+                    if (pl.getPoção(j) == null || pl.getPoção(j) <= 0) {
+                    } else {
+                        if (pl.getPoção(j) > 1) {
+                            System.out.println(pl.getNomePoção(j, false) + ": " + pl.getPoção(j));
+                        } else {
+                            System.out.println(pl.getNomePoção(j, true) + ": " + pl.getPoção(j));
+                        }
+                    }
                 }
-            } else if (op == null) {
+                System.out.println();
+                System.out.print("Digite S para continuar... ");
+                op = sc.nextLine();
+                break;
+            }
+
+            if (op == null) {
                 System.out.println("Seja Bem-vindo ao rpg de texto!");
                 System.out.println();
                 System.out.print("Escreva um nome: ");
@@ -53,7 +72,7 @@ public class game {
             for (int j = 0; j < pl.getArryPoções().length; j++) {
                 if (pl.getPoção(j) == null || pl.getPoção(j) <= 0) {
                 } else {
-                    k = 1;
+                    k = true;
                     if (pl.getPoção(j) > 1) {
                         System.out.println(pl.getNomePoção(j, false) + ": " + pl.getPoção(j));
                     } else {
@@ -65,17 +84,18 @@ public class game {
             System.out.println("---Menu---");
             System.out.println("0 - Para sair");
             System.out.println("1 - Para sortear");
-            if (k == 1) {
-                System.out.println("2 - Para usar uma poção");
+            System.out.println("2 - Para entrar na Loja");
+            if (k == true) {
+                System.out.println("3 - Para usar uma poção");
             }
             System.out.print("Digite a sua opção: ");
             jogo = sc.nextInt();
-            int random = 1;//(int) ((Math.random() * 3) + 1);
+            int random = (int) ((Math.random() * 3) + 1);
 
-            if (k == 0 && jogo == 2) {
+            if (k == false && jogo == 3) {
                 continue;
             }
-                
+
             if (jogo == 0) {
                 System.out.print("Você tem certeza (s/n)? ");
                 opcao = sc.next().charAt(0);
@@ -119,7 +139,7 @@ public class game {
                                 System.out.println("Você perdeu " + 1 + " moeda");
                                 pl.downMoeda(1);
                                 rdm = (int) ((Math.random() * 5) + 1);
-                                pm.evento(4, pl);
+                                pm.evento(rdm, pl);
                             }
                         } else if (opcao == 'n' || opcao == 'N') {
                             System.out.println("Esperava mais de você, " + pl.getNome() + " !");
@@ -171,13 +191,16 @@ public class game {
                         op = sc.nextLine();
 
                         continue;
+                    case 4:
+
+                        continue;
                     default:
                         System.out.println("Erro, reinicei o jogo :C");
                         System.out.print("Digite S para continuar... ");
                         op = sc.nextLine();
                         break;
                 }
-            } else if (jogo == 2) {
+            } else if (jogo == 3) {
                 screen.clear();
                 System.out.println("Qual poção deseja usar: ");
                 System.out.println();
@@ -210,6 +233,24 @@ public class game {
                     System.out.println();
                     System.out.print("Digite S para continuar... ");
                     op = sc.nextLine();
+                }
+                continue;
+            } else if (jogo == 2) {
+                screen.clear();
+                goblin gb = new goblin(pl.getLvl());
+                System.out.println("Seja Bem-Vindo a Loja do " + gb.getNome());
+                System.out.print("Quer saber mais sobre a loja (s/n)? ");
+                opcao = sc.next().charAt(0);
+
+                if (opcao == 's' || opcao == 'y' || opcao == 'S' || opcao == 'Y') {
+                    screen.clear();
+                    System.out.println(gb);
+                    System.out.println();
+                    System.out.print("Digite S para continuar... ");
+                    opcao = sc.next().charAt(0);
+                    gb.loja(pl);
+                } else {
+                    gb.loja(pl);
                 }
                 continue;
             } else {

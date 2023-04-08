@@ -1,4 +1,4 @@
-package system;
+package src.system;
 
 import java.io.IOException;
 
