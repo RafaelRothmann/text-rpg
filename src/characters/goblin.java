@@ -33,12 +33,12 @@ public class goblin extends zombie{
     public void loja(player pl) throws InterruptedException, IOException {
         screen.clear();
         char op1, ops;
-        try (Scanner sc = new Scanner(System.in)) {
+        try (Scanner sc1 = new Scanner(System.in)) {
             if (this.isVisit == true && this.heIsAngry == true) {
                 System.out.println("A loja está fechada...");
                 System.out.println();
                 System.out.print("Digite S para continuar... ");
-                ops = sc.next().charAt(0);
+                ops = sc1.next().charAt(0);
 
             } else {
                 char opcao;
@@ -204,13 +204,13 @@ public class goblin extends zombie{
                     System.out.println("5 - Para sair");
                     System.out.println();
                     System.out.print("Digite a opção: ");
-                    int op = sc.nextInt();
+                    int op = sc1.nextInt();
 
                     if (isPosion == true) {
                         System.out.println();
                         if (descP[0] != null && op == 1) {
                             System.out.print("Deseja saber mais sobre a " + nomeP[0] + "?");
-                            opcao = sc.next().charAt(0);
+                            opcao = sc1.next().charAt(0);
 
                             if (opcao == 's' || opcao == 'y' || opcao == 'S' || opcao == 'Y') {
                                 System.out.println();
@@ -218,7 +218,7 @@ public class goblin extends zombie{
                             }
                         } else if (descP[1] != null && op == 2) {
                             System.out.print("Deseja saber mais sobre a " + nomeP[1] + "?");
-                            opcao = sc.next().charAt(0);
+                            opcao = sc1.next().charAt(0);
 
                             if (opcao == 's' || opcao == 'y' || opcao == 'S' || opcao == 'Y') {
                                 System.out.println();
@@ -226,7 +226,7 @@ public class goblin extends zombie{
                             }
                         } else if (descP[2] != null && op == 3) {
                             System.out.print("Deseja saber mais sobre a " + nomeP[2] + "?");
-                            opcao = sc.next().charAt(0);
+                            opcao = sc1.next().charAt(0);
 
                             if (opcao == 's' || opcao == 'y' || opcao == 'S' || opcao == 'Y') {
                                 System.out.println();
@@ -241,7 +241,7 @@ public class goblin extends zombie{
                             if (pl.getMoeda() >= preço[0]) {
                                 if (preço[0] > 1) {
                                     System.out.print("Tem certeza de que deseja comprar esse produto (s/n)? ");
-                                    char escol = sc.next().charAt(0);
+                                    char escol = sc1.next().charAt(0);
 
                                     if (escol == 's' || escol == 'y' || escol == 'S' || escol == 'Y') {
                                         System.out.println("Você gastou " + preço[0] + " de moeda!");
@@ -260,7 +260,7 @@ public class goblin extends zombie{
                             if (pl.getMoeda() >= preço[0]) {
                                 if (preço[0] > 1) {
                                     System.out.print("Tem certeza de que deseja comprar esse produto (s/n)? ");
-                                    char ecol = sc.next().charAt(0);
+                                    char ecol = sc1.next().charAt(0);
 
                                     if (ecol == 's' || ecol == 'y' || ecol == 'S' || ecol == 'Y') {
                                         System.out.println("Você gastou " + preço[0] + " de moeda!");
@@ -269,7 +269,7 @@ public class goblin extends zombie{
                                         pl.addPoções(position[0], qd[0]);
                                         System.out.println();
                                         System.out.print("Digite S para continuar... ");
-                                        op1 = sc.next().charAt(0);
+                                        op1 = sc1.next().charAt(0);
                                         loja = false;
                                     }
                                 }
@@ -284,7 +284,7 @@ public class goblin extends zombie{
                             if (pl.getMoeda() >= preço[1]) {
                                 if (preço[1] > 1) {
                                     System.out.print("Tem certeza de que deseja comprar esse produto (s/n)? ");
-                                    char esco = sc.next().charAt(0);
+                                    char esco = sc1.next().charAt(0);
                                     if (esco == 's' || esco == 'y' || esco == 'S' || esco == 'Y') {
                                         System.out.println("Você gastou " + preço[1] + " de moeda!");
                                         System.out.println("Por " + qd[1] + ", " + nomeP[1] + "!");
@@ -292,7 +292,7 @@ public class goblin extends zombie{
                                         pl.upMoeda(qd[1]);
                                         System.out.println();
                                         System.out.print("Digite S para continuar... ");
-                                        op1 = sc.next().charAt(0);
+                                        op1 = sc1.next().charAt(0);
                                         loja = false;
                                     }
                                 }
@@ -303,7 +303,7 @@ public class goblin extends zombie{
                             if (pl.getMoeda() >= preço[1]) {
                                 if (preço[1] > 1) {
                                     System.out.print("Tem certeza de que deseja comprar esse produto (s/n)? ");
-                                    char scol = sc.next().charAt(0);
+                                    char scol = sc1.next().charAt(0);
                                     if (scol == 's' || scol == 'y' || scol == 'S' || scol == 'Y') {
                                         System.out.println("Você gastou " + preço[1] + " de moeda!");
                                         System.out.println("Por " + qd[1] + ", " + nomeP[1] + "!");
@@ -311,7 +311,7 @@ public class goblin extends zombie{
                                         pl.addPoções(position[1], qd[1]);
                                         System.out.println();
                                         System.out.print("Digite S para continuar... ");
-                                        op1 = sc.next().charAt(0);
+                                        op1 = sc1.next().charAt(0);
                                         loja = false;
                                     }
                                 }
@@ -326,7 +326,7 @@ public class goblin extends zombie{
                             if (pl.getMoeda() >= preço[2]) {
                                 if (preço[2] > 1) {
                                     System.out.print("Tem certeza de que deseja comprar esse produto (s/n)? ");
-                                    char esol = sc.next().charAt(0);
+                                    char esol = sc1.next().charAt(0);
                                     if (esol == 's' || esol == 'y' || esol == 'S' || esol == 'Y') {
                                         System.out.println("Você gastou " + preço[2] + " de moeda!");
                                         System.out.println("Por " + qd[2] + ", " + nomeP[2] + "!");
@@ -334,7 +334,7 @@ public class goblin extends zombie{
                                         pl.upMoeda(qd[2]);
                                         System.out.println();
                                         System.out.print("Digite S para continuar... ");
-                                        op1 = sc.next().charAt(0);
+                                        op1 = sc1.next().charAt(0);
                                         loja = false;
                                     }
                                 }
@@ -345,7 +345,7 @@ public class goblin extends zombie{
                             if (pl.getMoeda() >= preço[0]) {
                                 if (preço[2] > 1) {
                                     System.out.print("Tem certeza de que deseja comprar esse produto (s/n)? ");
-                                    char escl = sc.next().charAt(0);
+                                    char escl = sc1.next().charAt(0);
                                     if (escl == 's' || escl == 'y' || escl == 'S' || escl == 'Y') {
                                         System.out.println("Você gastou " + preço[2] + " de moeda!");
                                         System.out.println("Por " + qd[2] + ", " + nomeP[2] + "!");
@@ -353,7 +353,7 @@ public class goblin extends zombie{
                                         pl.addPoções(position[2], qd[2]);
                                         System.out.println();
                                         System.out.print("Digite S para continuar... ");
-                                        op1 = sc.next().charAt(0);
+                                        op1 = sc1.next().charAt(0);
                                         loja = false;
                                     }
                                 }
@@ -366,7 +366,7 @@ public class goblin extends zombie{
                     } else if (op == 4) {
                         System.out.println();
                         System.out.println("Escolha um produto para roubar (1,2,3)? ");
-                        int prod = sc.nextInt();
+                        int prod = sc1.nextInt();
                         prod -= 1;
 
                         while (pro[prod] == "Sem estoque!") {
@@ -374,7 +374,7 @@ public class goblin extends zombie{
                             System.out.println("Escolha outro!");
                             System.out.println();
                             System.out.print("Digite S para continuar... ");
-                            op = sc.next().charAt(0);
+                            op = sc1.next().charAt(0);
 
                             screen.clear();
                             System.out.println();
@@ -389,13 +389,13 @@ public class goblin extends zombie{
                             System.out.println("Produto 3: ");
                             System.out.println(pro[2]);
                             System.out.print("Digite o Produto: ");
-                            prod = sc.nextInt();
+                            prod = sc1.nextInt();
                             prod -= 1;
                         }
 
                         System.out.println();
                         System.out.print("Tem certeza de que deseja fazer isso (s/n)? ");
-                        opcao = sc.next().charAt(0);
+                        opcao = sc1.next().charAt(0);
 
                         if (opcao == 's' || opcao == 'y' || opcao == 'S' || opcao == 'Y') {
                             startRoubed(qd[prod], nomeP[prod], position[prod], p[prod], pl);
@@ -408,7 +408,7 @@ public class goblin extends zombie{
                         System.out.println("Obrigado por visitar a loja do" + getNome());
                         System.out.println();
                         System.out.print("Digite S para continuar... ");
-                        op = sc.next().charAt(0);
+                        op = sc1.next().charAt(0);
                         loja = false;
                         break;
                     }

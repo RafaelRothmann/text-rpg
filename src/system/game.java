@@ -7,12 +7,27 @@ import src.characters.pilgrim;
 import src.characters.player;
 import src.characters.zombie;
 import src.characters.goblin;
+import src.characters.orcs;
 
 public class game {
-    private int Level;
+    private double Level;
 
     public game(int lvl) {
         this.Level = lvl;
+    }
+
+    public double getLevel(){
+        return this.Level;
+    }
+
+    public void autoLevel(){
+        this.Level += 0.01;
+    }
+
+    public String getDica(){
+        String dica[] = {"Os zumbis são ótimas criaturas para subir de nível!", "Os peregrinos ficam iritados se você recusa um pedido deles!", "Após uma tentativa de roubo na Loja do Globin, o Globin ficará com raiva de você!", "Quanto maior o seu nível mais caro ficará os itens da loja do Globin!", "Os orcs são criaturas com pouca defesa, mas com ataque forte!"};
+        int rdm = (int) (((Math.random() * 5) + 1) - 1);
+        return dica[rdm];
     }
 
     public void gameMode() throws InterruptedException, IOException {
@@ -20,12 +35,12 @@ public class game {
 
         try (Scanner sc = new Scanner(System.in)) {
             player pl = new player(this.Level);
-            int rdm, jogo;
+            int rdm;
             boolean janela = true;
             char opcao;
             String op = null;
+            int random;
 
-            pl.upMoeda(10000);
             while (janela == true) {
                 boolean k = false;
                 if (pl.getVida() <= 0) {
@@ -59,9 +74,13 @@ public class game {
                     System.out.print("Escreva um nome: ");
                     String nome = sc.nextLine();
                     pl.setNome(nome);
+                } else {
+                    autoLevel();
                 }
 
                 screen.clear();
+                System.out.println("Dica: " + getDica());
+                System.out.println();
                 System.out.println("Olá, " + pl.getNome() + ", veja seus atributos: ");
                 System.out.println();
                 System.out.println("Nível: " + (int) (pl.getLvl()));
@@ -82,7 +101,7 @@ public class game {
                     }
                 }
                 System.out.println();
-                System.out.println("---Menu---");
+                System.out.println("--- Menu ---");
                 System.out.println("0 - Para sair");
                 System.out.println("1 - Para sortear");
                 System.out.println("2 - Para entrar na Loja");
@@ -90,8 +109,16 @@ public class game {
                     System.out.println("3 - Para usar uma poção");
                 }
                 System.out.print("Digite a sua opção: ");
-                jogo = sc.nextInt();
-                int random = (int) ((Math.random() * 3) + 1);
+
+                int jogo = sc.nextInt();
+
+                
+
+                if (pl.getLvl() >= 10){
+                    random = (int) ((Math.random() * 5) + 1);
+                } else{
+                    random = (int) ((Math.random() * 4) + 1);
+                }
 
                 if (k == false && jogo == 3) {
                     continue;
@@ -120,7 +147,7 @@ public class game {
                     screen.clear();
                     switch (random) {
                         case 1:
-                            pilgrim pm = new pilgrim(pl.getLvl());
+                            pilgrim pm = new pilgrim(getLevel());
                             System.out.println("Apareceu um " + pm.getNome() + " !");
                             System.out.print("Quer saber mais sobre ele (s/n)? ");
                             opcao = sc.next().charAt(0);
@@ -193,7 +220,7 @@ public class game {
 
                             continue;
                         case 4:
-                            zombie zm = new zombie(pl.getLvl());
+                            zombie zm = new zombie(getLevel());
                             System.out.println("Apareceu um " + zm.getNome() + "!");
                             System.out.println();
                             System.out.print("Quer saber mais sobre ele (s/n)? ");
@@ -215,8 +242,26 @@ public class game {
                             System.out.println();
                             System.out.print("Digite S para continuar... ");
                             op = sc.nextLine();
-                            
+
                             zm.stratFight(pl);
+                            continue;
+                        case 5:
+                            orcs ors = new orcs(getLevel());
+                            System.out.println("Apareceu um " + ors.getNome() + "!");
+                            System.out.println();
+                            System.out.print("Quer saber mais sobre ele (s/n)? ");
+                            opcao = sc.next().charAt(0);
+
+                            if (opcao == 's' || opcao == 'y' || opcao == 'S' || opcao == 'Y') {
+                                System.out.println(ors);
+                            }
+
+                            System.out.println();
+                            System.out.print("Digite S para continuar... ");
+                            op = sc.nextLine();
+                            screen.clear();
+                            
+                            ors.lutar(pl);
                             continue;
                         default:
                             System.out.println("Erro, reinicei o jogo :C");
@@ -261,7 +306,7 @@ public class game {
                     continue;
                 } else if (jogo == 2) {
                     screen.clear();
-                    goblin gb = new goblin(pl.getLvl());
+                    goblin gb = new goblin(getLevel());
                     System.out.println("Seja Bem-Vindo a Loja do " + gb.getNome());
                     System.out.print("Quer saber mais sobre a loja (s/n)? ");
                     opcao = sc.next().charAt(0);

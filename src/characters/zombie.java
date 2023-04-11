@@ -14,7 +14,7 @@ public class zombie {
 
     public zombie(double level) {
         this.cenario = "no chão";
-        this.nome = "Zombi";
+        this.nome = "Zumbi";
         this.vida = (int) (2 * (0.3 * level));
         this.ataque = (int) (2.5 * (level));
         this.defesa = (int) (1.5 * (0.5 * level));
@@ -285,7 +285,7 @@ public class zombie {
 
     public String toString(){
         return "\n" +
-        "Os zombis são criaturas que não pensam, apenas atacam!" +
+        "Os zumbis são criaturas que não pensam, apenas atacam!" +
         "\n" +
         "Eles também costumam ser uma das criaturas mais fracas!" +
         "\n" +
