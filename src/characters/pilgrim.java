@@ -1,7 +1,6 @@
 package src.characters;
 
 import java.io.IOException;
-import java.util.Scanner;
 
 import src.system.screen;
 
@@ -17,15 +16,14 @@ public class pilgrim extends zombie {
     }
 
     public void luta(player pl) throws InterruptedException, IOException {
-        try (Scanner sc = new Scanner(System.in)) {
-            System.out.println("O " + getNome() + " te deu um tapa!");
-            System.out.println();
-            System.out.println("Você perdeu 1 de vida!");
-            pl.downVida(1);
-            System.out.println("Digite S para continuar...");
-            char op = sc.next().charAt(0);
-        }
-        if (pl.getVida() > 0){
+
+        System.out.println("O " + getNome() + " te deu um tapa!");
+        System.out.println();
+        System.out.println("Você perdeu 1 de vida!");
+        pl.downVida(1);
+        screen.pause();
+
+        if (pl.getVida() > 0) {
             stratFight(pl);
             if (getVida() < 0) {
                 System.out.println("Você matou o " + getNome() + "!");
@@ -37,85 +35,79 @@ public class pilgrim extends zombie {
     }
 
     public void evento(int random, player pl) throws InterruptedException, IOException {
-        try (Scanner sc = new Scanner(System.in)) {
-            char op;
-            screen.clear();
-            String poção = "O Peregrino te ofecereceu um gole de uma poção desconhecida, deseja tomar (s/n)? ";
-            int bom = 9;
-            switch (random) {
-                case 1:
-                    int rdm = (int) ((Math.random() * (5 - (pl.getLvl())) + 1));
-                    System.out.println("O Peregrino te deu uma bolsa, com " + rdm + " de nível!");
-                    System.out.println();
-                    System.out.print("Você aceita essa bolsa (s/n)?");
-                    op = sc.next().charAt(0);
-                    System.out.println();
-                    if (op == 's' || op == 'y' || op == 'S' || op == 'Y') {
-                        System.out.println("Você ganhou " + rdm + " de nível!");
-                        pl.upLvl(rdm);
+        char op;
+        screen.clear();
+        String poção = "O Peregrino te ofecereceu um gole de uma poção desconhecida, deseja tomar (s/n)? ";
+        int bom = 9;
+        switch (random) {
+            case 1:
+                int rdm = (int) ((Math.random() * (5 - (pl.getLvl())) + 1));
+                System.out.println("O Peregrino te deu uma bolsa, com " + rdm + " de nível!");
+                System.out.println();
+                System.out.print("Você aceita essa bolsa (s/n)?");
+                op = sc.next().charAt(0);
+                System.out.println();
+                if (op == 's' || op == 'y' || op == 'S' || op == 'Y') {
+                    System.out.println("Você ganhou " + rdm + " de nível!");
+                    pl.upLvl(rdm);
+                }
+                break;
+            case 2:
+                int position = (int) ((Math.random() * 10) + 1);
+                position -= 1;
+                rdm = (int) ((Math.random() * ((5) / pl.getLvl()) + 1));
+                System.out.print(poção);
+                op = sc.next().charAt(0);
+
+                System.out.println();
+                if (op == 's' || op == 'y' || op == 'S' || op == 'Y') {
+                    if (position > bom) {
+                        System.out.println("Você " + pl.getDescPoção(position, 3));
+                    } else {
+                        System.out.println("Você " + pl.getDescPoção(position, 1));
                     }
-                    break;
-                case 2:
-                    int position = (int) ((Math.random() * 10) + 1);
-                    position -= 1;
-                    rdm = (int) ((Math.random() * ((5) / pl.getLvl()) + 1));
-                    System.out.print(poção);
-                    op = sc.next().charAt(0);
+                    pl.usePoções(position, 1);
 
-                    System.out.println();
-                    if (op == 's' || op == 'y' || op == 'S' || op == 'Y') {
-                        if (position > bom) {
-                            System.out.println("Você " + pl.getDescPoção(position, 3));
-                        } else {
-                            System.out.println("Você " + pl.getDescPoção(position, 1));
-                        }
-                        pl.usePoções(position, 1);
+                } else if (op == 'n' || op == 'N') {
+                    System.out.println("Que pena " + pl.getNome() + " !");
+                }
+                break;
+            case 3:
+                rdm = (int) ((Math.random() * (5 - (pl.getLvl())) + 1));
+                System.out.println("O Peregrino te ofecereceu uma bolsa, com " + rdm + " de Moedas!");
+                System.out.print("Deseja aceitar (s/n)? ");
+                char op1 = sc.next().charAt(0);
 
-                    } else if (op == 'n' || op == 'N') {
-                        System.out.println("Que pena " + pl.getNome() + " !");
-                    }
-                    break;
-                case 3:
-                    rdm = (int) ((Math.random() * (5 - (pl.getLvl())) + 1));
-                    System.out.println("O Peregrino te ofecereceu uma bolsa, com " + rdm + " de Moedas!");
-                    System.out.print("Deseja aceitar (s/n)? ");
-                    char op1 = sc.next().charAt(0);
+                if (op1 == 's' || op1 == 'y' || op1 == 'S' || op1 == 'Y') {
+                    System.out.println("Você pegou as " + rdm + " moedas!");
+                    pl.upMoeda(rdm);
+                }
+                break;
+            case 4:
+                rdm = (int) ((Math.random() * ((5 + pl.getLvl()) - (pl.getMoeda())) + 1));
+                System.out.println("O Peregrino está pedindo 10 moedas, deseja dar (s/n)?");
+                char op2 = sc.next().charAt(0);
 
-                    if (op1 == 's' || op1 == 'y' || op1 == 'S' || op1 == 'Y') {
-                        System.out.println("Você pegou as " + rdm + " moedas!");
-                        pl.upMoeda(rdm);
-                    }
-                    break;
-                case 4:
-                    rdm = (int) ((Math.random() * ((5 + pl.getLvl()) - (pl.getMoeda())) + 1));
-                    System.out.println("O Peregrino está pedindo 10 moedas, deseja dar (s/n)?");
-                    char op2 = sc.next().charAt(0);
-
-                    System.out.println();
-                    if (op2 == 's' || op2 == 'y' || op2 == 'S' || op2 == 'Y') {
-                        if (pl.getMoeda() < rdm) {
-                            System.out.println("Cade as moedas?");
-                            System.out.println("Digite S para continuar...");
-                            op = sc.next().charAt(0);
-                            luta(pl);
-                        } else {
-                            pl.downMoeda(rdm);
-                            System.out.println("Você deu as " + rdm + " moedas!");
-                            System.out.println("Digite S para continuar...");
-                            op = sc.next().charAt(0);
-                        }
-                    } else if (op2 == 'n' || op2 == 'N') {
-                        System.out.println("Como assim " + pl.getNome() + "?");
-                        System.out.println();
-                        System.out.print("Digite S para continuar... ");
-                        op = sc.next().charAt(0);
+                System.out.println();
+                if (op2 == 's' || op2 == 'y' || op2 == 'S' || op2 == 'Y') {
+                    if (pl.getMoeda() < rdm) {
+                        System.out.println("Cade as moedas?");
+                        screen.pause();
                         luta(pl);
+                    } else {
+                        pl.downMoeda(rdm);
+                        System.out.println("Você deu as " + rdm + " moedas!");
+                        screen.pause();
                     }
-                    break;
-                default:
-                    System.out.println("O Peregrino pegou a moeda e foi embora... ");
-                    break;
-            }
+                } else if (op2 == 'n' || op2 == 'N') {
+                    System.out.println("Como assim " + pl.getNome() + "?");
+                    screen.pause();
+                    luta(pl);
+                }
+                break;
+            default:
+                System.out.println("O Peregrino pegou a moeda e foi embora... ");
+                break;
         }
     }
 

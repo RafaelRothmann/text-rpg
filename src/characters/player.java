@@ -3,6 +3,7 @@ package src.characters;
 import java.util.Scanner;
 
 public class player {
+    public static Scanner sc = new Scanner(System.in);
     private double lvl;
     private int vida;
     private int defesa;
@@ -167,58 +168,57 @@ public class player {
     }
 
     public void toUsePoções(int poção) {
-        try (Scanner sc = new Scanner(System.in)) {
-            char opcao;
-            int bom = 9;
 
-            System.out.print("Deseja saber mais sobre a " + getNomePoção(poção, true) + " antes de a usar (s/n)?");
-            opcao = sc.next().charAt(0);
+        char opcao;
+        int bom = 9;
 
-            System.out.println();
-            if (opcao == 's' || opcao == 'y' || opcao == 'S' || opcao == 'Y') {
-                if (opcao > bom) {
-                    System.out.println("Com a " + getNomePoção(poção, true) + ", você " + getDescPoção(poção, 0) + " !");
-                } else {
-                    System.out.println("Com a " + getNomePoção(poção, true) + ", você " + getDescPoção(poção, 2) + " !");
-                }
-                System.out.println();
+        System.out.print("Deseja saber mais sobre a " + getNomePoção(poção, true) + " antes de a usar (s/n)?");
+        opcao = sc.next().charAt(0);
+
+        System.out.println();
+        if (opcao == 's' || opcao == 'y' || opcao == 'S' || opcao == 'Y') {
+            if (opcao > bom) {
+                System.out.println("Com a " + getNomePoção(poção, true) + ", você " + getDescPoção(poção, 0) + " !");
+            } else {
+                System.out.println("Com a " + getNomePoção(poção, true) + ", você " + getDescPoção(poção, 2) + " !");
             }
-
-            System.out.print("Você tem certeza de que deseja usar uma " + getNomePoção(poção, true) + " (s/n)? ");
-            opcao = sc.next().charAt(0);
-
             System.out.println();
-            if (opcao == 's' || opcao == 'y' || opcao == 'S' || opcao == 'Y') {
-                if (getPoção(poção) > 1) {
-                    System.out.print("Quantas poções quer usar? ");
-                    int n = sc.nextInt();
-                    if (poção > bom) {
-                        System.out.println("Você usou "+ n + " , " + getNomePoção(poção, true) + "!" + " Você "
-                                + getDescPoção(poção, 3) + "!!!");
-                        System.out.println();
-                        removePoções(poção, n);
-                        usePoções(poção,n);
-                    } else {
-                        System.out.println("Você usou 1, " + getNomePoção(poção, true) + "!" + " Você "
-                                + getDescPoção(poção, 1) + "!!!");
-                        System.out.println();
-                        removePoções(poção, 1);
-                        usePoções(poção,1);
-                    }
+        }
+
+        System.out.print("Você tem certeza de que deseja usar uma " + getNomePoção(poção, true) + " (s/n)? ");
+        opcao = sc.next().charAt(0);
+
+        System.out.println();
+        if (opcao == 's' || opcao == 'y' || opcao == 'S' || opcao == 'Y') {
+            if (getPoção(poção) > 1) {
+                System.out.print("Quantas poções quer usar? ");
+                int n = sc.nextInt();
+                if (poção > bom) {
+                    System.out.println("Você usou " + n + " , " + getNomePoção(poção, true) + "!" + " Você "
+                            + getDescPoção(poção, 3) + "!!!");
+                    System.out.println();
+                    removePoções(poção, n);
+                    usePoções(poção, n);
                 } else {
-                    if (poção > bom) {
-                        System.out.println("Você usou 1, " + getNomePoção(poção, true) + "!" + " Você "
-                                + getDescPoção(poção, 3) + "!!!");
-                    } else {
-                        System.out.println("Você usou 1, " + getNomePoção(poção, true) + "!" + " Você "
-                                + getDescPoção(poção, 1) + "!!!");
-                    }
+                    System.out.println("Você usou 1, " + getNomePoção(poção, true) + "!" + " Você "
+                            + getDescPoção(poção, 1) + "!!!");
                     System.out.println();
                     removePoções(poção, 1);
-                    usePoções(poção,1);
+                    usePoções(poção, 1);
                 }
-
+            } else {
+                if (poção > bom) {
+                    System.out.println("Você usou 1, " + getNomePoção(poção, true) + "!" + " Você "
+                            + getDescPoção(poção, 3) + "!!!");
+                } else {
+                    System.out.println("Você usou 1, " + getNomePoção(poção, true) + "!" + " Você "
+                            + getDescPoção(poção, 1) + "!!!");
+                }
+                System.out.println();
+                removePoções(poção, 1);
+                usePoções(poção, 1);
             }
+
         }
     }
 }
